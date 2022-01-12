@@ -204,6 +204,8 @@ scene.add(camera);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
+// Reset Button
+
 /**
  * Renderer
  */
@@ -216,8 +218,21 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 /**
  * Animate
  */
+const aboutTL = gsap.timeline();
+const contactTL = gsap.timeline();
+
 window.addEventListener('mousedown', () => {
-  gsap.to(header.position, { y: -10, ease: 'power1.out', duration: 1 });
+  aboutTL
+    .to(header.position, { y: -9, ease: 'power1.out', duration: 1 })
+    .to(leftPanel.position, { y: 1, ease: 'power1.out', duration: 1 }, '-=1')
+    .to(rightPanel.position, { y: 1, ease: 'power1.out', duration: 1 }, '-=1');
+});
+
+window.addEventListener('dblclick', () => {
+  contactTL
+    .to(header.rotation, { z: Math.PI * 0.5 })
+    .to(header.position, { y: 1 })
+    .to(header.scale, { x: 0.45, y: 0.25 });
 });
 
 const clock = new THREE.Clock();
